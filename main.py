@@ -1,14 +1,20 @@
+import sys
 from stats import *
 
 def get_book_text(book):
-  with open(book) as f:
-    return f.read()
-  return(file_contents)
+  try:
+    with open(book) as f:
+      return f.read()
+  except Exception as e:
+    print(f"Error encountered: {e}")
 
 def main():
-  word_count = count_words(get_book_text("./books/frankenstein.txt"))
+  if len(sys.argv) != 2:
+    print("Usage: python3 main.py <path_to_book>")
+    sys.exit(1)
 
-  char_count_dict = count_chars(get_book_text("./books/frankenstein.txt"))
+  word_count = count_words(get_book_text(sys.argv[1]))
+  char_count_dict = count_chars(get_book_text(sys.argv[1]))
 
   sorted_dict_list = chars_dict_to_sorted_list(char_count_dict)
 
